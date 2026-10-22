@@ -76,6 +76,10 @@ git config --global user.email "Tu correo"
 git config --global init.defaultBranch main
 gh auth login
 
-# Primer commit y repositorio en Github
-
+# Primer commit y repositorio en Github usando gh
+cd caja-cli
+git status
+git add .
+git commit -m "feat: crear proyecto caja-cli con uv"
+gh repo create caja-cli --private --source=. --push
 ```
