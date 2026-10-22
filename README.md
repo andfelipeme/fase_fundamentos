@@ -119,3 +119,18 @@ git revert <id-del=commit>          # deshace un commit creando otro (seguro)
 5. Reto sin IA: dibuja en tus nota el historial de ramas que muestra ```git log --oneline --graph```
 
 
+### 5.
+```bash
+git log --oneline --graph
+*   69fbf33 (HEAD -> main, origin/main, origin/HEAD) fix: Se resuelve conflicto entre fix/a y fix/b
+|\
+| * 75576b4 (fix/b) feat: Modificacion del titulo B
+* | 4c06303 (fix/a) feat: Modicacion del titulo A
+|/
+* 4f4a09f docs: Se agraga como se trabaja con el historial en git (#1)
+* 176a751 feat: Se hace Hello World
+* 27f4940 docs: Se agrega como se crea el proyecto con uv
+* 5a34dd8 chore: Se agrega .gitignore y se deja de rastrear __pycache__
+* f8337b1 feat: crear proyecto caja-cli con uv
+```
+
