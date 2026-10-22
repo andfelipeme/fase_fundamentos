@@ -4,7 +4,7 @@
 
 - Terminal - "herdr": multiplexor de terminal y gestor de procesos diseñado específicamente para supervisar, organizar y ejecutar múltiples agentes de programación con inteligencia artificial.
 - Homebrew: Instala herramientas en macOS con un comando.
-- uv: Instala Python, crea proyectos, maneja dependencias y entornos virtuales. Reemplaza pip, venv y pyenv.
+- uv: Instala Python, crea proyectos, maneja dependencias y entornos virtuales. Reemplaza pip, venv y pyenv. Escrito en Rust.
 - VSCode + Ruff: el IDE y la herramienta que revisa errores y da formato al código.
 - Claude Code: mi agente de IA en herdr, y mi instructor.
 
@@ -51,3 +51,31 @@ code .                      # abre el proyecto en VSCode
 - README.md --> Documentación de nuestro proyecto.
 - uv.lock --> archivo que guarda las versiones de nuestras dependencias y librerías. No se debe editar.
 - .gitignore --> se indican los archivos que no queremos ni debemos subir a git
+
+# Clase 1.2 - Git y GitHub
+
+### Qué es y para qué sirve?
+
+- Git --> Guarda el historial de tu código en tu computador. Manejando versiones de nuesstro proyecto.
+- GitHub --> guarda los repositorios en la nube, sirve de portafolio y ejecuta pruebas automáticas.
+
+### Importante
+
+- git add --> Prepara lo que se va subir
+- git commit --> los guarda en el historial
+- Un commit debe ser un cambio con sentido. feat: función nueva, fix: correción, docs: documentación, test: testeo, refactor: refactorización.
+- Rama --> línea de trabajo aparte. main es la principal, pero para manejar mejor nuestro historial se puede trabajar con distintas ramas que combinen con el cambio que se va hacer.
+- Nunca subas secretos o archivos privados. Para eso usa .gitignore
+
+### Codigo
+
+```bash
+#   Configuración (una sola vez)
+git config --global user.name "Tu nombre"
+git config --global user.email "Tu correo"
+git config --global init.defaultBranch main
+gh auth login
+
+# Primer commit y repositorio en Github
+
+```
