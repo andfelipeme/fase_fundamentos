@@ -82,4 +82,40 @@ git status
 git add .
 git commit -m "feat: crear proyecto caja-cli con uv"
 gh repo create caja-cli --private --source=. --push
+
+# Primer commit y creación de repo
+cd caja-cli
+git status
+git add .
+git commit -m "..."
+git branch -M main
+git remote add origin url
+git push -u origin main
+
+# Flujo de trabajo con ramma y pull request
+git switch -c feature/precio-por-peso
+# ...se escribe codigo...
+git diff                     # Qué cambio?
+git add -p o git add .       # agrega cambio por cambio revisando (-p)
+git commit -m "..."
+git push -u origin feat/precio-por-peeso
+gh pr create --fill
+gh pr merge --squash --delete-branch
+git switch main
+git pull
+
+# Consultar y deshacer
+git log --oneline --graph           # historial
+git restore archivo.py              # descarta cambios sin guardar de un archivo
+git revert <id-del=commit>          # deshace un commit creando otro (seguro)
 ```
+
+### Practica
+
+1. Sube caja-cli a Github como repositorio privado
+2. Haz 5 commits pequeños con el formato feat: / fix: / docs: / chore: 
+3. Crea un conflicto a propósito: cambia la misma línea de README en dos ramas, fusionalas y resuélvelo a mano
+4. Abre un pull request con gh pr create, revisalo en la web y fusionalo.
+5. Reto sin IA: dibuja en tus nota el historial de ramas que muestra ```git log --oneline --graph```
+
+
