@@ -134,3 +134,45 @@ git log --oneline --graph
 * f8337b1 feat: crear proyecto caja-cli con uv
 ```
 
+# Clase 1.3 Python 1 - tipos, decimal y funciones
+
+### Qué es y para qué sirce?
+
+-  Tipos básicos: (int, float, bool, str, None) --> La materia prima de cualquier programa.
+- Decimal: números exactos para dinero y pesos. **float** acumula errores de redondeo y pues eso causa descuadres.
+- Funciones con tipos: bloques reutilizaables que declaran qué reciben y qué devuelven.
+
+
+
+```python
+from decimal import ROUND_HALF_UP, Decimal
+
+def precio_venta(precio_kg: Decimal, peso_kg: Decimal) -> Decimal:
+    total = precio_kg * peso_kg
+    return total.quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+
+def formato_pesos(valor: Decimal) -> str:
+    return "$" + f"{valor:,.0f}".replace(",",".")
+
+def descuento(tipo_cliente: str) -> Decimal:
+    match tipo_cliente:
+        case "mayorista":
+            return Decimal("0.10")
+        case "frecuente":
+            return Decimal("0.05")
+        case _:
+            return Decimal("0")
+
+def aplicar_descuento(total, porcentaje) -> Decimal:
+    total_descuento = total * (1-porcentaje)
+    return "$" + f"{total_descuento:,.0f}".replace(",",".")
+
+total = precio_venta(Decimal("28900"), Decimal ("1.235"))
+print(formato_pesos(total)) # Devulve total con un formato en pesos colombianos
+print(descuneto("frecuente"))
+print(aplicar_descuento(total, descuento("mayorista")))
+```
+
+Práctica:
+
+1. Escribe la función aplicar_descuento(total, porcentaje) -> Decimal usando descuento() 
