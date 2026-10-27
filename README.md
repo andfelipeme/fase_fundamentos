@@ -147,32 +147,88 @@ git log --oneline --graph
 ```python
 from decimal import ROUND_HALF_UP, Decimal
 
-def precio_venta(precio_kg: Decimal, peso_kg: Decimal) -> Decimal:
-    total = precio_kg * peso_kg
-    return total.quantize(Decimal("1"), rounding=ROUND_HALF_UP)
 
-def formato_pesos(valor: Decimal) -> str:
-    return "$" + f"{valor:,.0f}".replace(",",".")
+def main() -> None:
+    def precio_venta(precio_kg: Decimal, peso_kg: Decimal) -> Decimal:
+        total = precio_kg * peso_kg
+        return total.quantize(Decimal("1"), rounding=ROUND_HALF_UP)
 
-def descuento(tipo_cliente: str) -> Decimal:
-    match tipo_cliente:
-        case "mayorista":
-            return Decimal("0.10")
-        case "frecuente":
-            return Decimal("0.05")
-        case _:
-            return Decimal("0")
+    def formato_pesos(valor: Decimal) -> str:
+        if valor is None:
+            return "$0"
+        else:
+            return "$" + f"{valor:,.0f}".replace(",", ".")
 
-def aplicar_descuento(total, porcentaje) -> Decimal:
-    total_descuento = total * (1-porcentaje)
-    return "$" + f"{total_descuento:,.0f}".replace(",",".")
+    def descuento(tipo_cliente: str) -> Decimal:
+        match tipo_cliente:
+            case "mayorista":
+                return Decimal("0.10")
+            case "frecuente":
+                return Decimal("0.05")
+            case _:
+                return Decimal("0")
 
-total = precio_venta(Decimal("28900"), Decimal ("1.235"))
-print(formato_pesos(total)) # Devulve total con un formato en pesos colombianos
-print(descuneto("frecuente"))
-print(aplicar_descuento(total, descuento("mayorista")))
+    def aplicar_descuento(total, porcentaje) -> Decimal:
+        return total * (1 - porcentaje)
+
+    def calcular_cambio(total, pago) -> Decimal | None:
+        if pago < total:
+            return None
+        else:
+            cambio = pago - total
+            return cambio.quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+
+    while True:
+        try:
+            precio_kg = Decimal(input("Ingrese el precio por kg: ").replace(",", "."))
+            if precio_kg > 0:
+                break
+            elif precio_kg <= 0:
+                print("El precio por kg debe ser un valor positivo.")
+                continue
+        except Exception:
+            print("Ingrese un valor válido para el precio por kg, por ejemplo: 10000")
+
+    peso_total = Decimal("0")
+    venta_total = Decimal("0")
+    contador_ventas = 0
+
+    while True:
+        try:
+            entrada = input("Ingrese el peso en kg (o 'fin' para terminar): ").strip()
+            # strip() elimina los espacios en blanco al inicio y al final de la cadena
+            if entrada.lower() == "fin":
+                print("------ Resumen de ventas ------")
+                print(f"Se realizaron {contador_ventas} ventas.")
+                print(f"Se vendieron {peso_total} kg de producto.")
+                print(f"Venta total: {formato_pesos(venta_total)}")
+                break
+
+            peso_kg = Decimal(entrada.replace(",", "."))
+
+            if peso_kg <= 0:
+                print("El peso debe ser un valor positivo.")
+                continue
+            elif peso_kg > 0:
+                total = precio_venta(precio_kg, peso_kg)
+                peso_total += peso_kg
+                venta_total += total
+                contador_ventas += 1
+                print(f"Se hizo una venta de {formato_pesos(total)}")
+
+        except Exception:
+            print("Ingrese un valor numérico válido para el peso, por ejemplo: 1.5")
+
+    tipo_cli = input("Ingrese el tipo de cliente (mayorista/frecuente/otro): ").lower()
+    total_con_descuento = aplicar_descuento(venta_total, descuento(tipo_cli))
+    print(f"Total con descuento: {formato_pesos(total_con_descuento)}")  # Total con des
+    devuelta = calcular_cambio(venta_total, Decimal("40000"))  # ALmacena el cambio
+    print(f"Cambio: {formato_pesos(devuelta)}")  # Devuelve el cambio en pesos cop
+
 ```
 
 Práctica:
 
 1. Escribe la función aplicar_descuento(total, porcentaje) -> Decimal usando descuento() 
+2. Escribe la función calcular_cambio(total, pago) -> Decimal | None que devuelva None si el pago no alcanza.
+3. Con un while, pide pesos con input() hasta que escribas fin y muestra el total vendido con formato_pesos
