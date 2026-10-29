@@ -136,3 +136,46 @@ git log --oneline --graph
 
 # Clase 1.3 - Pythpn 1: tipos, Decimal, decisiones, ciclos y funciones
 
+### Variables y tipos de datos
+
+- Una variable es un nombre que guarda un valor. Cada valor tiene un tipo, y este define qué puedes hacer con él.
+
+
+```python
+precio = 26900              # int
+peso = 1.235                # float 
+nombre = "Carne molida"     # str
+disponible = True           # bool
+cliente = None              # None: aún no sabemos quién es
+print(type(precio))         # <class 'int'>
+print(type(nombre))         # <class 'str'>
+```
+
+- Cambiar de tipo
+
+```python
+int("123")              # 123
+str(precio)             # "26900"
+int("abc")              # Da error por que un texto no es un número
+```
+
+### Operaciones y comparaciones
+
+- Los operadores matemáticos son +, -, *, / (división; siempre da decimal), // (división entera), % (residuo) y ** (potencia). Las comparaciones (==, !=, <, >, <=, >=) responden True o False, y se combinan con and (las dos), or (al menos una) y not (lo contrario). Con texto, + une y * repite.
+
+```python
+print(7 / 2)                        # 3.5
+print(7 // 2)                       # 3
+print(7 % 2)                        # 1
+print("$" + "100")                  # $100
+print(26900 > 20000)                # True
+print(26900 > 20000 and 5 > 9)      # True and False -> False
+```
+
+Ejercicio: Calcula cuántos billetes de 20000 caben en 95000 y cuanto sobra
+
+```python
+print("En $95000 caben", 95000 // 20000, "productos de $20000")
+print("Y te sobran $" + str(95000 % 20000))
+```
+
