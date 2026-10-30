@@ -179,3 +179,22 @@ print("En $95000 caben", 95000 // 20000, "productos de $20000")
 print("Y te sobran $" + str(95000 % 20000))
 ```
 
+### Por qué el dinero va con Decimal
+
+- Un float guarda una aproximación binaria del número: 0.1 no se puede guardar exacto. En una suma no se nota, pero en miles de ventas las diferencia se acumulan y el cierre de caja no cuadra. **Decimal** guarda los digitos exactos. Tres reglas: créarlo siempre desde texto, opera **Decimal** con **Decimal** (o con enteros) y redondea con **quantize**.
+
+```python
+from decimal import Decimal, ROUND_HALF_UP
+
+print(0.1 + 0.2)
+print(Decimal("0.1") + Decimal("0.2"))
+print(Decimal(0.1)) # Lo que pasa cuando no se opera con strings
+
+total = Decimal("26900") * Decimal("1.235")
+print(total)
+print(total.quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+```
+- **quantize** redondea a la forma del valor que le pasas: **Decimal("1")** es sin decimales y **Decimal("0.01")** es con dos. **ROUND_HALF_UP** sube cuando el decimal es 5 o más, que es lo que espera un cliente.
+
+### Texto con formato (f-strings)
+
